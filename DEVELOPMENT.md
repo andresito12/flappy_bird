@@ -21,7 +21,9 @@ Solutions:
 4/25/18
 Problems:
 1) Getting load errors for flap sound for bird.
-2) Problems committing progress since I made a new project and am trying to commit to the same repository.
+2) Getting unallocated errors for flappy bird jpg.
+3) Problems committing progress since I made a new project and am trying to commit to the same repository.
 
 Solutions:
 1) I converted the mp3 files to wav files but I'm still having issues at the moment.
+2) I tried using ofImage and ofTexture but I do not have either working yet.
