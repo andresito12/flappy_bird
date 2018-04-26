@@ -27,3 +27,5 @@ Solutions:
 1) I converted the mp3 files to wav files but I'm still having issues at the moment.
 2) I tried using ofImage and ofTexture but I do not have either working yet.
 
+1) I converted the mp3 files to wav files and moving them into different folders in case of scope problems but I'm still having issues at the moment.
+2) I tried using ofImage and ofTexture but I do not have either working yet. I also tried moving them into different folders in case of scope problems.
