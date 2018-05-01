@@ -21,7 +21,7 @@ class ofApp : public ofBaseApp{
 		void dragEvent(ofDragInfo dragInfo);
 		void gotMessage(ofMessage msg);
 	
-		const float x_position = 300.0f;
+		const float x_position = ofGetWindowWidth() / 3;
 		float y_position;
 		float velocity;
 		float acceleration;
@@ -30,6 +30,14 @@ class ofApp : public ofBaseApp{
 		bool flapped;
 		double elapsed_time;
 
-		ofImage flappy_bird;
+		ofImage background;
+
+		ofImage wings_up;
+		ofImage wings_down;
 		ofSoundPlayer flap_sound;
+
+		list<int> pipes{ 0, 0, 0 };
+		float level_position;
+		float section_width;
+		int current_section;
 };
