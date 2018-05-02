@@ -188,8 +188,6 @@ C:\Users\Andres Ruiz\Desktop\of_v0.9.8_vs_release\addons\ofxGui\src;%(Additional
     <ClCompile Include="..\..\..\Desktop\of_v0.9.8_vs_release\addons\ofxGui\src\ofxSlider.cpp" />
     <ClCompile Include="..\..\..\Desktop\of_v0.9.8_vs_release\addons\ofxGui\src\ofxSliderGroup.cpp" />
     <ClCompile Include="..\..\..\Desktop\of_v0.9.8_vs_release\addons\ofxGui\src\ofxToggle.cpp" />
-    <ClCompile Include="Pipe.cpp" />
-    <ClCompile Include="src\Bird.cpp" />
     <ClCompile Include="src\main.cpp" />
     <ClCompile Include="src\ofApp.cpp" />
     <ClCompile Include="tests\tests.cpp" />
@@ -205,8 +203,6 @@ C:\Users\Andres Ruiz\Desktop\of_v0.9.8_vs_release\addons\ofxGui\src;%(Additional
     <ClInclude Include="..\..\..\Desktop\of_v0.9.8_vs_release\addons\ofxGui\src\ofxSliderGroup.h" />
     <ClInclude Include="..\..\..\Desktop\of_v0.9.8_vs_release\addons\ofxGui\src\ofxToggle.h" />
     <ClInclude Include="..\snake-linked-list-andresito12\test\catch.hpp" />
-    <ClInclude Include="Pipe.h" />
-    <ClInclude Include="src\Bird.h" />
     <ClInclude Include="src\ofApp.h" />
   </ItemGroup>
   <ItemGroup>

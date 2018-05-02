@@ -2,19 +2,24 @@
 
 //--------------------------------------------------------------
 void ofApp::setup(){
-	y_position = 0.0f;
-	velocity = 0.0f;
-	acceleration = 0.0f;
-	gravity = .03f;
-	flap_thrust = -gravity * 100;
-	flapped = false;
+	bird_y_position = 0.0f;
+	bird_velocity = 0.0f;
+	bird_acceleration = 0.0f;
+	bird_gravity = .03f;
+	bird_flap_thrust = -bird_gravity * 100;
+	bird_flapped = false;
 
 	background.load("../../Debug/data/flappy_background.png");
 
 	wings_up.load("../../Debug/data/wings_up.png");
 	wings_down.load("../../Debug/data/wings_down.png");
+	
 	flap_sound.load("../../Debug/data/sfx_wing.wav");
 	flap_sound.setMultiPlay(true);
+	pipe_pass.load("../../Debug/data/sfx_point.wav");
+	pipe_pass.setMultiPlay(true);
+	die.load("../../Debug/data/sfx_hit.wav");
+	fall.load("../../Debug/data/sfx_die.wav");
 
 	pipe1_position = 1500;
 	pipe2_position = 1900;
@@ -26,22 +31,22 @@ void ofApp::setup(){
 
 //--------------------------------------------------------------
 void ofApp::update(){
-	if (flapped) {
-		acceleration = 0.0f;
-		velocity = flap_thrust;
-		flapped = false;
+	if (bird_flapped) {
+		bird_acceleration = 0.0f;
+		bird_velocity = bird_flap_thrust;
+		bird_flapped = false;
 	} else {
-		acceleration += gravity;
+		bird_acceleration += bird_gravity;
 	}
-	if (acceleration >= gravity) {
-		acceleration = gravity;
+	if (bird_acceleration >= bird_gravity) {
+		bird_acceleration = bird_gravity;
 	}
-	velocity += acceleration;
-	y_position += velocity;
+	bird_velocity += bird_acceleration;
+	bird_y_position += bird_velocity;
 	
-	pipe1_position -= 1.5f;
-	pipe2_position -= 1.5f;
-	pipe3_position -= 1.5f;
+	pipe1_position -= 1.0f;
+	pipe2_position -= 1.0f;
+	pipe3_position -= 1.0f;
 	if (pipe1_position < 0) {
 		pipe1_height = ofRandom(200, 800);
 		pipe1_position = 1210;
@@ -52,17 +57,22 @@ void ofApp::update(){
 		pipe3_height = ofRandom(200, 800);
 		pipe3_position = 1210;
 	}
+	if (bird_x_position == pipe1_position - 150
+		|| bird_x_position == pipe2_position - 150
+		|| bird_x_position == pipe3_position - 150) {
+		pipe_pass.play();
+	}
 }
 
 //--------------------------------------------------------------
 void ofApp::draw(){
 	ofSetColor(255);
 	background.draw(0, 0, ofGetWindowWidth(), ofGetWindowHeight());
-	if (velocity > 0) {
-		wings_up.draw(x_position - 170, y_position, 365.6f, 205.6f);
+	if (bird_velocity > 0) {
+		wings_up.draw(wings_up_x_pos, bird_y_position, wings_up_width, wings_up_height);
 	}
 	else {
-		wings_down.draw(x_position - 100, y_position, 200.0f, 205.6f);
+		wings_down.draw(wings_down_x_pos, bird_y_position, wings_down_width, wings_down_height);
 	}
 
 	ofFill();
@@ -94,7 +104,7 @@ void ofApp::draw(){
 void ofApp::keyPressed(int key){
 	switch (key) {
 		case ' ':
-			flapped = true;
+			bird_flapped = true;
 			flap_sound.play();
 		break;
 	}

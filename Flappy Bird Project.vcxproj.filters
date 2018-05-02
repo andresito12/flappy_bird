@@ -34,12 +34,6 @@
     <ClCompile Include="tests\tests.cpp">
       <Filter>tests</Filter>
     </ClCompile>
-    <ClCompile Include="src\Bird.cpp">
-      <Filter>src</Filter>
-    </ClCompile>
-    <ClCompile Include="Pipe.cpp">
-      <Filter>src</Filter>
-    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="src">
@@ -91,12 +85,6 @@
     </ClInclude>
     <ClInclude Include="..\snake-linked-list-andresito12\test\catch.hpp">
       <Filter>tests</Filter>
-    </ClInclude>
-    <ClInclude Include="src\Bird.h">
-      <Filter>src</Filter>
-    </ClInclude>
-    <ClInclude Include="Pipe.h">
-      <Filter>src</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

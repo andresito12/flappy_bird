@@ -21,20 +21,22 @@ class ofApp : public ofBaseApp{
 		void dragEvent(ofDragInfo dragInfo);
 		void gotMessage(ofMessage msg);
 	
-		const float x_position = ofGetWindowWidth() / 3;
-		float y_position;
-		float velocity;
-		float acceleration;
-		float gravity;
-		float flap_thrust;
-		bool flapped;
-		double elapsed_time;
+		const float bird_x_position = ofGetWindowWidth() / 3;
+		float bird_y_position;
+		float bird_velocity;
+		float bird_acceleration;
+		float bird_gravity;
+		float bird_flap_thrust;
+		bool bird_flapped;
 
 		ofImage background;
 
 		ofImage wings_up;
 		ofImage wings_down;
 		ofSoundPlayer flap_sound;
+		ofSoundPlayer pipe_pass;
+		ofSoundPlayer die;
+		ofSoundPlayer fall;
 
 		float pipe1_position;
 		float pipe2_position;
