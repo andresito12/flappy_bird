@@ -16,9 +16,12 @@ void ofApp::setup(){
 	flap_sound.load("sfx_wing.wav");
 	flap_sound.setMultiPlay(true);
 
-	level_position = 0.0f;
-	section_width = ofGetWindowWidth() / (pipes.size() - 1);
-	current_section = 0;
+	pipe1_position = ofGetWindowWidth();
+	pipe2_position = ofGetWindowWidth();
+	pipe3_position = ofGetWindowWidth();
+	pipe1_height = ofRandom(500, 1000);
+	pipe2_height = ofRandom(500, 1000);
+	pipe3_height = ofRandom(500, 1000);
 }
 
 //--------------------------------------------------------------
@@ -36,18 +39,24 @@ void ofApp::update(){
 	velocity += acceleration;
 	y_position += velocity;
 	
-	level_position += 14.0f;
-	if (level_position > section_width) {
-		level_position -= section_width;
-		pipes.pop_front();
-		int i = rand() % (ofGetWindowHeight() - 20);
-		pipes.push_back(i);
+	pipe1_position -= 1.5f;
+	pipe2_position -= 1.5f;
+	pipe3_position -= 1.5f;
+	if (pipe1_position < 0) {
+		pipe1_height = ofRandom(500, 1000);
+		pipe1_position = ofGetScreenWidth();
+	} else if (pipe2_position < 0) {
+		pipe2_height = ofRandom(500, 1000);
+		pipe2_position = ofGetScreenWidth();
+	} else if (pipe3_position < 0) {
+		pipe3_height = ofRandom(500, 1000);
+		pipe3_position = ofGetScreenWidth();
 	}
 }
 
 //--------------------------------------------------------------
 void ofApp::draw(){
-	//ofDrawCircle(x_position, y_position, 50);
+	ofSetColor(255);
 	background.draw(0, 0, ofGetWindowWidth(), ofGetWindowHeight());
 	if (velocity > 0) {
 		wings_up.draw(x_position - 170, y_position, 365.6f, 205.6f);
@@ -55,6 +64,14 @@ void ofApp::draw(){
 	else {
 		wings_down.draw(x_position - 100, y_position, 200.0f, 205.6f);
 	}
+	ofFill();
+	ofSetColor(50, 150, 50, 0);
+	ofDrawRectangle(0, 1315, 1000, 0);
+	ofFill();
+	ofSetColor(50, 150, 50);
+	ofDrawRectangle(pipe1_position + 10, ground_height, -pipe_width, -pipe1_height);
+	ofDrawRectangle(pipe1_position + 10, ground_height - pipe1_height - vert_pipe_space,
+		-pipe_width, -vert_pipe_space);
 	/*for (auto p : pipes) {
 		if (p != 0) {
 			ofFill();

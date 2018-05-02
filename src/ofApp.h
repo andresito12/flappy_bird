@@ -36,8 +36,14 @@ class ofApp : public ofBaseApp{
 		ofImage wings_down;
 		ofSoundPlayer flap_sound;
 
-		list<int> pipes{ 0, 0, 0 };
-		float level_position;
-		float section_width;
-		int current_section;
+		float pipe1_position;
+		float pipe2_position;
+		float pipe3_position;
+		float pipe1_height;
+		float pipe2_height;
+		float pipe3_height;
+		float horiz_pipe_space;
+		float vert_pipe_space = 365.0f;
+		const float pipe_width = 150;
+		const float ground_height = ofGetWindowHeight() - 185;
 };
