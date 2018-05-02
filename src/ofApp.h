@@ -46,4 +46,5 @@ class ofApp : public ofBaseApp{
 		float vert_pipe_space = 365.0f;
 		const float pipe_width = 150;
 		const float ground_height = ofGetWindowHeight() - 185;
+		const float top_pipe_height = 1000.0f;
 };

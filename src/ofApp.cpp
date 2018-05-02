@@ -9,19 +9,19 @@ void ofApp::setup(){
 	flap_thrust = -gravity * 100;
 	flapped = false;
 
-	background.load("flappy_background.png");
+	background.load("../../Debug/data/flappy_background.png");
 
-	wings_up.load("wings_up.png");
-	wings_down.load("wings_down.png");
-	flap_sound.load("sfx_wing.wav");
+	wings_up.load("../../Debug/data/wings_up.png");
+	wings_down.load("../../Debug/data/wings_down.png");
+	flap_sound.load("../../Debug/data/sfx_wing.wav");
 	flap_sound.setMultiPlay(true);
 
-	pipe1_position = ofGetWindowWidth();
-	pipe2_position = ofGetWindowWidth();
-	pipe3_position = ofGetWindowWidth();
-	pipe1_height = ofRandom(500, 1000);
-	pipe2_height = ofRandom(500, 1000);
-	pipe3_height = ofRandom(500, 1000);
+	pipe1_position = 1500;
+	pipe2_position = 1900;
+	pipe3_position = 2300;
+	pipe1_height = ofRandom(200, 800);
+	pipe2_height = ofRandom(200, 800);
+	pipe3_height = ofRandom(200, 800);
 }
 
 //--------------------------------------------------------------
@@ -43,14 +43,14 @@ void ofApp::update(){
 	pipe2_position -= 1.5f;
 	pipe3_position -= 1.5f;
 	if (pipe1_position < 0) {
-		pipe1_height = ofRandom(500, 1000);
-		pipe1_position = ofGetScreenWidth();
+		pipe1_height = ofRandom(200, 800);
+		pipe1_position = 1210;
 	} else if (pipe2_position < 0) {
-		pipe2_height = ofRandom(500, 1000);
-		pipe2_position = ofGetScreenWidth();
+		pipe2_height = ofRandom(200, 800);
+		pipe2_position = 1210;
 	} else if (pipe3_position < 0) {
-		pipe3_height = ofRandom(500, 1000);
-		pipe3_position = ofGetScreenWidth();
+		pipe3_height = ofRandom(200, 800);
+		pipe3_position = 1210;
 	}
 }
 
@@ -64,27 +64,30 @@ void ofApp::draw(){
 	else {
 		wings_down.draw(x_position - 100, y_position, 200.0f, 205.6f);
 	}
+
 	ofFill();
 	ofSetColor(50, 150, 50, 0);
 	ofDrawRectangle(0, 1315, 1000, 0);
+
 	ofFill();
 	ofSetColor(50, 150, 50);
-	ofDrawRectangle(pipe1_position + 10, ground_height, -pipe_width, -pipe1_height);
-	ofDrawRectangle(pipe1_position + 10, ground_height - pipe1_height - vert_pipe_space,
-		-pipe_width, -vert_pipe_space);
-	/*for (auto p : pipes) {
-		if (p != 0) {
-			ofFill();
-			ofSetColor(50, 150, 50, 0);
-			ofDrawRectangle(current_section * section_width + 10 - level_position, ofGetWindowHeight() - p,
-				current_section * section_width + 15 - level_position, ofGetWindowHeight());
-			ofFill();
-			ofSetColor(50, 150, 50, 0);
-			ofDrawRectangle(current_section * section_width + 10 - level_position, 0,
-				current_section * section_width + 15 - level_position, ofGetWindowHeight() - 15);
-		}
-		current_section++;
-	}*/
+	//draws bottom rectangle of first pipe
+	ofDrawRectangle(pipe1_position, ground_height, -pipe_width, -pipe1_height);
+	//draws top rectangle of first pipe
+	ofDrawRectangle(pipe1_position, ground_height - pipe1_height - vert_pipe_space,
+		-pipe_width, -top_pipe_height);
+
+	//draws bottom rectangle of second pipe
+	ofDrawRectangle(pipe2_position, ground_height, -pipe_width, -pipe2_height);
+	//draws top rectangle of second pipe
+	ofDrawRectangle(pipe2_position, ground_height - pipe2_height - vert_pipe_space,
+		-pipe_width, -top_pipe_height);
+
+	//draws bottom rectangle of third pipe
+	ofDrawRectangle(pipe3_position, ground_height, -pipe_width, -pipe3_height);
+	//draws top rectangle of third pipe
+	ofDrawRectangle(pipe3_position, ground_height - pipe3_height - vert_pipe_space,
+		-pipe_width, -top_pipe_height);
 }
 
 //--------------------------------------------------------------
