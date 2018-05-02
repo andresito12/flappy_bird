@@ -16,6 +16,9 @@ void ofApp::setup(){
 	die.load("../../Debug/data/sfx_hit.wav");
 	fall.load("../../Debug/data/sfx_die.wav");
 
+	//load flappy font for score
+	flappy_font.load("../../Debug/data/04B_19__.TTF", 100);
+
 	//bird variables
 	bird_y_position = 0.0f;
 	bird_velocity = 0.0f;
@@ -63,10 +66,11 @@ void ofApp::update(){
 	}
 
 	//check for successful pass thorugh pipe
-	if (bird_x_position == pipe1_position - 150
-		|| bird_x_position == pipe2_position - 150
-		|| bird_x_position == pipe3_position - 150) {
+	if (bird_x_position == pipe1_position - point_delay
+		|| bird_x_position == pipe2_position - point_delay
+		|| bird_x_position == pipe3_position - point_delay) {
 		pipe_pass.play();
+		score++;
 	}
 }
 
@@ -110,6 +114,10 @@ void ofApp::draw(){
 	//draws top rectangle of third pipe
 	ofDrawRectangle(pipe3_position, ground_height - pipe3_height - vert_pipe_space,
 		-pipe_width, -top_pipe_height);
+
+	//draws score at top of screen
+	ofSetColor(255);
+	flappy_font.drawString(std::to_string(score), 450, 300);
 }
 
 //--------------------------------------------------------------

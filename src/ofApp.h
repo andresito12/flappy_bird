@@ -31,6 +31,8 @@ class ofApp : public ofBaseApp{
 		ofSoundPlayer die;
 		ofSoundPlayer fall;
 
+		ofTrueTypeFont flappy_font;
+
 		const float bird_x_position = ofGetWindowWidth() / 3;
 		const float wings_up_x_pos = bird_x_position - 175;
 		const float wings_down_x_pos = bird_x_position - 100;
@@ -45,11 +47,14 @@ class ofApp : public ofBaseApp{
 		float bird_acceleration;
 		bool bird_flapped;
 
+		int score = 0;
+
 		const float horiz_pipe_space = 400.0f;
 		const float vert_pipe_space = 365.0f;
 		const float pipe_width = 150;
 		const float ground_height = ofGetWindowHeight() - 185;
 		const float top_pipe_height = 1000.0f;
+		const float point_delay = 150.0f;
 		float pipe1_position;
 		float pipe2_position;
 		float pipe3_position;
