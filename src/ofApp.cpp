@@ -2,18 +2,13 @@
 
 //--------------------------------------------------------------
 void ofApp::setup(){
-	bird_y_position = 0.0f;
-	bird_velocity = 0.0f;
-	bird_acceleration = 0.0f;
-	bird_gravity = .03f;
-	bird_flap_thrust = -bird_gravity * 100;
-	bird_flapped = false;
-
+	//load png images for background and both bird states
 	background.load("../../Debug/data/flappy_background.png");
 
 	wings_up.load("../../Debug/data/wings_up.png");
 	wings_down.load("../../Debug/data/wings_down.png");
 	
+	//load wav files for sound effects
 	flap_sound.load("../../Debug/data/sfx_wing.wav");
 	flap_sound.setMultiPlay(true);
 	pipe_pass.load("../../Debug/data/sfx_point.wav");
@@ -21,6 +16,13 @@ void ofApp::setup(){
 	die.load("../../Debug/data/sfx_hit.wav");
 	fall.load("../../Debug/data/sfx_die.wav");
 
+	//bird variables
+	bird_y_position = 0.0f;
+	bird_velocity = 0.0f;
+	bird_acceleration = 0.0f;
+	bird_flapped = false;
+
+	//pipe variables
 	pipe1_position = 1500;
 	pipe2_position = 1900;
 	pipe3_position = 2300;
@@ -31,6 +33,7 @@ void ofApp::setup(){
 
 //--------------------------------------------------------------
 void ofApp::update(){
+	//bird physics
 	if (bird_flapped) {
 		bird_acceleration = 0.0f;
 		bird_velocity = bird_flap_thrust;
@@ -44,6 +47,7 @@ void ofApp::update(){
 	bird_velocity += bird_acceleration;
 	bird_y_position += bird_velocity;
 	
+	//level scrolling for pipes
 	pipe1_position -= 1.0f;
 	pipe2_position -= 1.0f;
 	pipe3_position -= 1.0f;
@@ -57,6 +61,8 @@ void ofApp::update(){
 		pipe3_height = ofRandom(200, 800);
 		pipe3_position = 1210;
 	}
+
+	//check for successful pass thorugh pipe
 	if (bird_x_position == pipe1_position - 150
 		|| bird_x_position == pipe2_position - 150
 		|| bird_x_position == pipe3_position - 150) {
@@ -66,21 +72,27 @@ void ofApp::update(){
 
 //--------------------------------------------------------------
 void ofApp::draw(){
+	//set and draw background
 	ofSetColor(255);
 	background.draw(0, 0, ofGetWindowWidth(), ofGetWindowHeight());
+
+	//draws wings up bird if falling
+	//else draw wings down bird if flapping
 	if (bird_velocity > 0) {
 		wings_up.draw(wings_up_x_pos, bird_y_position, wings_up_width, wings_up_height);
-	}
-	else {
+	} else {
 		wings_down.draw(wings_down_x_pos, bird_y_position, wings_down_width, wings_down_height);
 	}
 
+	//rectangle that fills ground
 	ofFill();
 	ofSetColor(50, 150, 50, 0);
 	ofDrawRectangle(0, 1315, 1000, 0);
 
+	//sets color and fill for all three pipes
 	ofFill();
 	ofSetColor(50, 150, 50);
+
 	//draws bottom rectangle of first pipe
 	ofDrawRectangle(pipe1_position, ground_height, -pipe_width, -pipe1_height);
 	//draws top rectangle of first pipe
