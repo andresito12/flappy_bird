@@ -191,7 +191,11 @@ void ofApp::keyPressed(int key){
 			break;
 		}
 	} else if (bird_is_dead && sound_played) {
-		reset();
+		switch (key) {
+		case ' ':
+			reset();
+			break;
+		}
 	}
 }
 
