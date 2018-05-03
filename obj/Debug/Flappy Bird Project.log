@@ -1,4 +1,7 @@
-﻿  Flappy Bird Project.vcxproj -> C:\Users\Andres Ruiz\Documents\GitHub\final-project-andresito12\bin\Flappy Bird Project_debug.exe
+﻿  ofApp.cpp
+LINK : warning LNK4067: ambiguous entry point; selected 'mainCRTStartup'
+     Creating library bin\Flappy Bird Project_debug.lib and object bin\Flappy Bird Project_debug.exp
+  Flappy Bird Project.vcxproj -> C:\Users\Andres Ruiz\Documents\GitHub\final-project-andresito12\bin\Flappy Bird Project_debug.exe
   Flappy Bird Project.vcxproj -> bin\Flappy Bird Project_debug.pdb (Full PDB)
   
   	                   9	C:\Users\Andres Ruiz\Desktop\of_v0.9.8_vs_release\export\vs\Win32\

@@ -42,95 +42,15 @@ void ofApp::setup(){
 }
 
 //--------------------------------------------------------------
-void ofApp::update(){
-	//bird flap and fall
-	if (bird_flapped && bird_is_dead == false) {
-		bird_acceleration = 0.0f;
-		bird_velocity = bird_flap_thrust;
-		bird_flapped = false;
-	} else {
-		bird_acceleration += bird_gravity;
-	}
-
-	//cap acceleration at gravity
-	if (bird_acceleration >= bird_gravity) {
-		bird_acceleration = bird_gravity;
-	}
-	
-	//update bird and hitbox vertical position if above ground barrier
-	if (bird_y_position < ground_barrier) {
-		bird_velocity += bird_acceleration;
-		bird_y_position += bird_velocity;
-		hitbox_y += bird_velocity;
-	} else {
-		bird_is_dead = true;
-		if (sound_played == false) {
-			die.play();
-			sound_played = true;
-		}
-	}
-	
-	//level scrolling for pipes
-	if (bird_is_dead == false) {
-		pipe1_position -= 1.0f;
-		pipe2_position -= 1.0f;
-		pipe3_position -= 1.0f;
-	}
-	if (pipe1_position < 0 && bird_is_dead == false) {
-		pipe1_height = ofRandom(200, 800);
-		pipe1_position = 1210;
-	} else if (pipe2_position < 0 && bird_is_dead == false) {
-		pipe2_height = ofRandom(200, 800);
-		pipe2_position = 1210;
-	} else if (pipe3_position < 0 && bird_is_dead == false) {
-		pipe3_height = ofRandom(200, 800);
-		pipe3_position = 1210;
-	}
-
-	//hit detection for pipe1
-	if ((hitbox_x + hitbox_width) >= (pipe1_position - pipe_width) && (hitbox_x) <= (pipe1_position)) {
-		if (hitbox_y <= (ground_height - pipe1_height - vert_pipe_space) || (hitbox_y + hitbox_height) >= (ground_height - pipe1_height)) {
-			bird_is_dead = true;
-			if (sound_played == false) {
-				die.play();
-				fall.play();
-				sound_played = true;
-			}
-		}
-	}
-
-	//hit detection for pipe2
-	if ((hitbox_x + hitbox_width) >= (pipe2_position - pipe_width) && (hitbox_x) <= (pipe2_position)) {
-		if (hitbox_y <= (ground_height - pipe2_height - vert_pipe_space) || (hitbox_y + hitbox_height) >= (ground_height - pipe2_height)) {
-			bird_is_dead = true;
-			if (sound_played == false) {
-				die.play();
-				fall.play();
-				sound_played = true;
-			}
-		}
-	}
-
-	//hit detection for pipe3
-	if ((hitbox_x + hitbox_width) >= (pipe3_position - pipe_width) && (hitbox_x) <= (pipe3_position)) {
-		if (hitbox_y <= (ground_height - pipe3_height - vert_pipe_space) || (hitbox_y + hitbox_height) >= (ground_height - pipe3_height)) {
-			bird_is_dead = true;
-			if (sound_played == false) {
-				die.play();
-				fall.play();
-				sound_played = true;
-			}
-		}
-	}
-
-	//check for successful pass thorugh pipe
-	if ((bird_x_position == pipe1_position - point_delay
-		|| bird_x_position == pipe2_position - point_delay
-		|| bird_x_position == pipe3_position - point_delay)
-		&& bird_is_dead == false) {
-		pipe_pass.play();
-		score++;
-	}
+void ofApp::update(){	
+	flapAndFall();
+	capAcceleration();
+	updateBirdAndHitbox();
+	scrollPipes();
+	hitDetectionPipe1();
+	hitDetectionPipe2();
+	hitDetectionPipe3();
+	passPipe();
 }
 
 //--------------------------------------------------------------
@@ -202,4 +122,121 @@ void ofApp::keyPressed(int key){
 //--------------------------------------------------------------
 void ofApp::reset() {
 	setup();
+}
+
+//--------------------------------------------------------------
+void ofApp::flapAndFall() {
+	//bird flap and fall
+	if (bird_flapped && bird_is_dead == false) {
+		bird_acceleration = 0.0f;
+		bird_velocity = bird_flap_thrust;
+		bird_flapped = false;
+	}
+	else {
+		bird_acceleration += bird_gravity;
+	}
+}
+
+//--------------------------------------------------------------
+void ofApp::capAcceleration() {
+	//cap acceleration at gravity
+	if (bird_acceleration >= bird_gravity) {
+		bird_acceleration = bird_gravity;
+	}
+}
+
+//--------------------------------------------------------------
+void ofApp::updateBirdAndHitbox() {
+	//update bird and hitbox vertical position if above ground barrier
+	if (bird_y_position < ground_barrier) {
+		bird_velocity += bird_acceleration;
+		bird_y_position += bird_velocity;
+		hitbox_y += bird_velocity;
+	}
+	else {
+		bird_is_dead = true;
+		if (sound_played == false) {
+			die.play();
+			sound_played = true;
+		}
+	}
+}
+
+//--------------------------------------------------------------
+void ofApp::scrollPipes() {
+	//level scrolling for pipes
+	if (bird_is_dead == false) {
+		pipe1_position -= 1.0f;
+		pipe2_position -= 1.0f;
+		pipe3_position -= 1.0f;
+	}
+	if (pipe1_position < 0 && bird_is_dead == false) {
+		pipe1_height = ofRandom(200, 800);
+		pipe1_position = 1210;
+	}
+	else if (pipe2_position < 0 && bird_is_dead == false) {
+		pipe2_height = ofRandom(200, 800);
+		pipe2_position = 1210;
+	}
+	else if (pipe3_position < 0 && bird_is_dead == false) {
+		pipe3_height = ofRandom(200, 800);
+		pipe3_position = 1210;
+	}
+}
+
+//--------------------------------------------------------------
+void ofApp::hitDetectionPipe1() {
+	//hit detection for pipe1
+	if ((hitbox_x + hitbox_width) >= (pipe1_position - pipe_width) && (hitbox_x) <= (pipe1_position)) {
+		if (hitbox_y <= (ground_height - pipe1_height - vert_pipe_space) || (hitbox_y + hitbox_height) >= (ground_height - pipe1_height)) {
+			bird_is_dead = true;
+			if (sound_played == false) {
+				die.play();
+				fall.play();
+				sound_played = true;
+			}
+		}
+	}
+}
+
+//--------------------------------------------------------------
+void ofApp::hitDetectionPipe2() {
+	//hit detection for pipe2
+	if ((hitbox_x + hitbox_width) >= (pipe2_position - pipe_width) && (hitbox_x) <= (pipe2_position)) {
+		if (hitbox_y <= (ground_height - pipe2_height - vert_pipe_space) || (hitbox_y + hitbox_height) >= (ground_height - pipe2_height)) {
+			bird_is_dead = true;
+			if (sound_played == false) {
+				die.play();
+				fall.play();
+				sound_played = true;
+			}
+		}
+	}
+}
+
+//--------------------------------------------------------------
+void ofApp::hitDetectionPipe3() {
+	//hit detection for pipe3
+	if ((hitbox_x + hitbox_width) >= (pipe3_position - pipe_width) && (hitbox_x) <= (pipe3_position)) {
+		if (hitbox_y <= (ground_height - pipe3_height - vert_pipe_space) || (hitbox_y + hitbox_height) >= (ground_height - pipe3_height)) {
+			bird_is_dead = true;
+			if (sound_played == false) {
+				die.play();
+				fall.play();
+				sound_played = true;
+			}
+		}
+	}
+}
+
+//--------------------------------------------------------------
+void ofApp::passPipe() {
+	//check for successful pass thorugh pipe
+	if ((bird_x_position == pipe1_position - point_delay
+		|| bird_x_position == pipe2_position - point_delay
+		|| bird_x_position == pipe3_position - point_delay)
+		&& bird_is_dead == false) {
+		pipe_pass.play();
+		score++;
+	}
 }

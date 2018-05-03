@@ -1,20 +1,19 @@
-/*
+
 #define CATCH_CONFIG_MAIN
 #include "catch.hpp";
 
 TEST_CASE("max acceleration") {
-	REQUIRE();
+	//REQUIRE();
 }
 
 TEST_CASE("-velocity when flapped") {
-	REQUIRE();
+	//REQUIRE();
 }
 
 TEST_CASE("") {
-	REQUIRE();
+	//REQUIRE();
 }
 
 TEST_CASE("space pressed") {
-	REQUIRE();
+	//REQUIRE();
 }
-*/

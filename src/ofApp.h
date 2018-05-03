@@ -10,6 +10,15 @@ class ofApp : public ofBaseApp{
 		void draw();
 
 		void keyPressed(int key);
+
+		void flapAndFall();
+		void capAcceleration();
+		void updateBirdAndHitbox();
+		void scrollPipes();
+		void hitDetectionPipe1();
+		void hitDetectionPipe2();
+		void hitDetectionPipe3();
+		void passPipe();
 		void reset();
 	
 		ofImage background;
