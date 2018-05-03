@@ -62,9 +62,9 @@ Solutions:
 
 5/2/18
 Problems:
-1)
-2)
+1) The bird would die after hitting an open space between pipes.
+2) The sound effects were playing over each other infinitely in the update method.
 
 Solutions:
-1)
-2)
+1) The hitbox was not following the bird once the bird started moving. I just had to update the hitbox so it would follow the bird.
+2) I added flags so the effects would only play once for each instance of the game. All the values would reset when the game would reset based on a space bar press.
