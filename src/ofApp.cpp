@@ -58,6 +58,10 @@ void ofApp::update(){
 		hitbox_y += bird_velocity;
 	} else {
 		bird_is_dead = true;
+		if (sound_played == false) {
+			die.play();
+			sound_played = true;
+		}
 	}
 	
 	//level scrolling for pipes
@@ -78,14 +82,21 @@ void ofApp::update(){
 	}
 
 	if (bird_is_dead) {
-		die.play();
-		fall.play();
+		/*if (sound_played) {
+			gameOver();
+			sound_played = true;
+		}*/
 	}
 
 	//hit detection for pipe1
 	if ((hitbox_x + hitbox_width) >= (pipe1_position - pipe_width) && (hitbox_x) <= (pipe1_position)) {
 		if (hitbox_y <= (ground_height - pipe1_height - vert_pipe_space) || (hitbox_y + hitbox_height) >= (ground_height - pipe1_height)) {
 			bird_is_dead = true;
+			if (sound_played == false) {
+				die.play();
+				fall.play();
+				sound_played = true;
+			}
 		}
 	}
 
@@ -93,6 +104,11 @@ void ofApp::update(){
 	if ((hitbox_x + hitbox_width) >= (pipe2_position - pipe_width) && (hitbox_x) <= (pipe2_position)) {
 		if (hitbox_y <= (ground_height - pipe2_height - vert_pipe_space) || (hitbox_y + hitbox_height) >= (ground_height - pipe2_height)) {
 			bird_is_dead = true;
+			if (sound_played == false) {
+				die.play();
+				fall.play();
+				sound_played = true;
+			}
 		}
 	}
 
@@ -100,6 +116,11 @@ void ofApp::update(){
 	if ((hitbox_x + hitbox_width) >= (pipe3_position - pipe_width) && (hitbox_x) <= (pipe3_position)) {
 		if (hitbox_y <= (ground_height - pipe3_height - vert_pipe_space) || (hitbox_y + hitbox_height) >= (ground_height - pipe3_height)) {
 			bird_is_dead = true;
+			if (sound_played == false) {
+				die.play();
+				fall.play();
+				sound_played = true;
+			}
 		}
 	}
 
@@ -123,15 +144,6 @@ void ofApp::draw(){
 	ofFill();
 	ofSetColor(0, 0, 0, 0);
 	ofDrawRectangle(hitbox_x, hitbox_y, hitbox_width, hitbox_height);
-	
-	//draws wings up bird if falling
-	//else draw wings down bird if flapping
-	ofSetColor(255);
-	if (bird_velocity > 0) {
-		wings_up.draw(wings_up_x_pos, bird_y_position, wings_up_width, wings_up_height);
-	} else {
-		wings_down.draw(wings_down_x_pos, bird_y_position, wings_down_width, wings_down_height);
-	}
 
 	//sets color and fill for all three pipes
 	ofFill();
@@ -155,6 +167,16 @@ void ofApp::draw(){
 	ofDrawRectangle(pipe3_position, ground_height - pipe3_height - vert_pipe_space,
 		-pipe_width, -top_pipe_height);
 
+	//draws wings up bird if falling
+	//else draw wings down bird if flapping
+	ofSetColor(255);
+	if (bird_velocity > 0) {
+		wings_up.draw(wings_up_x_pos, bird_y_position, wings_up_width, wings_up_height);
+	}
+	else {
+		wings_down.draw(wings_down_x_pos, bird_y_position, wings_down_width, wings_down_height);
+	}
+
 	//draws score at top of screen
 	ofSetColor(255);
 	flappy_font.drawString(std::to_string(score), 450, 300);
@@ -173,51 +195,6 @@ void ofApp::keyPressed(int key){
 }
 
 //--------------------------------------------------------------
-void ofApp::keyReleased(int key){
-
-}
-
-//--------------------------------------------------------------
-void ofApp::mouseMoved(int x, int y ){
-
-}
-
-//--------------------------------------------------------------
-void ofApp::mouseDragged(int x, int y, int button){
-
-}
-
-//--------------------------------------------------------------
-void ofApp::mousePressed(int x, int y, int button){
-
-}
-
-//--------------------------------------------------------------
-void ofApp::mouseReleased(int x, int y, int button){
-
-}
-
-//--------------------------------------------------------------
-void ofApp::mouseEntered(int x, int y){
-
-}
-
-//--------------------------------------------------------------
-void ofApp::mouseExited(int x, int y){
-
-}
-
-//--------------------------------------------------------------
-void ofApp::windowResized(int w, int h){
-
-}
-
-//--------------------------------------------------------------
-void ofApp::gotMessage(ofMessage msg){
-
-}
-
-//--------------------------------------------------------------
-void ofApp::dragEvent(ofDragInfo dragInfo){ 
-
+void ofApp::gameOver() {
+	fall.play();
 }

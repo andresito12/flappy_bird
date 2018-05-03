@@ -10,16 +10,7 @@ class ofApp : public ofBaseApp{
 		void draw();
 
 		void keyPressed(int key);
-		void keyReleased(int key);
-		void mouseMoved(int x, int y );
-		void mouseDragged(int x, int y, int button);
-		void mousePressed(int x, int y, int button);
-		void mouseReleased(int x, int y, int button);
-		void mouseEntered(int x, int y);
-		void mouseExited(int x, int y);
-		void windowResized(int w, int h);
-		void dragEvent(ofDragInfo dragInfo);
-		void gotMessage(ofMessage msg);
+		void gameOver();
 	
 		ofImage background;
 
@@ -49,6 +40,7 @@ class ofApp : public ofBaseApp{
 		bool bird_is_dead;
 
 		int score = 0;
+		bool sound_played = false;
 
 		const float horiz_pipe_space = 400.0f;
 		const float vert_pipe_space = 365.0f;
