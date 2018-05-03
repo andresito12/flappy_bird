@@ -15,7 +15,7 @@ Possible Obstacles:
 1) How gravity will work? I'm not how I am going to implement the movement of the bird. I could have it flap upwards each time a key is pressed. Another way would be to have it ascend until a key is pressed and then have it descend. Then it would descend until a key is pressed again. There would be no gravity at all in that implementation. Another possibility is to use the arrow keys to ascend and descend while they are pressed. There would be no gravity here either because the bird would float at its current position until it is moved.
 2) Using snake to recognize moving pipes so game ends when bird crashes into ground or pipe.
 
-Libraries:
+Libraries: 
 ofImage to load background and bird images
 http://openframeworks.cc/documentation/graphics/ofImage/
 ofSoundPlayer to load sound effects
