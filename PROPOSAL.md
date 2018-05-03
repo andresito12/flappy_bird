@@ -16,7 +16,9 @@ Possible Obstacles:
 2) Using snake to recognize moving pipes so game ends when bird crashes into ground or pipe.
 
 Libraries:
-https://github.com/frankiezafe/ofxBoostTween
-possibly animate bird wings
-https://github.com/memo/ofxMSAPhysics
-gravity and collision for bird
+ofImage to load background and bird images
+http://openframeworks.cc/documentation/graphics/ofImage/
+ofSoundPlayer to load sound effects
+http://openframeworks.cc/documentation/sound/ofSoundPlayer/
+ofTrueTypeFont to load font from original flappy bird game
+http://openframeworks.cc/documentation/graphics/ofTrueTypeFont/
