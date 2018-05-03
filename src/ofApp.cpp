@@ -33,6 +33,12 @@ void ofApp::setup(){
 	pipe1_height = ofRandom(200, 800);
 	pipe2_height = ofRandom(200, 800);
 	pipe3_height = ofRandom(200, 800);
+
+	//miscellaneous variables
+	score = 0;
+	sound_played = false;
+	hitbox_x = wings_down_x_pos + 50;
+	hitbox_y = bird_y_position + 50;
 }
 
 //--------------------------------------------------------------
@@ -79,13 +85,6 @@ void ofApp::update(){
 	} else if (pipe3_position < 0 && bird_is_dead == false) {
 		pipe3_height = ofRandom(200, 800);
 		pipe3_position = 1210;
-	}
-
-	if (bird_is_dead) {
-		/*if (sound_played) {
-			gameOver();
-			sound_played = true;
-		}*/
 	}
 
 	//hit detection for pipe1
@@ -191,10 +190,12 @@ void ofApp::keyPressed(int key){
 			flap_sound.play();
 			break;
 		}
+	} else if (bird_is_dead && sound_played) {
+		reset();
 	}
 }
 
 //--------------------------------------------------------------
-void ofApp::gameOver() {
-	fall.play();
+void ofApp::reset() {
+	setup();
 }

@@ -10,7 +10,7 @@ class ofApp : public ofBaseApp{
 		void draw();
 
 		void keyPressed(int key);
-		void gameOver();
+		void reset();
 	
 		ofImage background;
 
@@ -39,8 +39,8 @@ class ofApp : public ofBaseApp{
 		bool bird_flapped;
 		bool bird_is_dead;
 
-		int score = 0;
-		bool sound_played = false;
+		int score;
+		bool sound_played;
 
 		const float horiz_pipe_space = 400.0f;
 		const float vert_pipe_space = 365.0f;
