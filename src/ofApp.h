@@ -46,14 +46,16 @@ class ofApp : public ofBaseApp{
 		float bird_velocity;
 		float bird_acceleration;
 		bool bird_flapped;
+		bool bird_is_dead;
 
 		int score = 0;
 
 		const float horiz_pipe_space = 400.0f;
 		const float vert_pipe_space = 365.0f;
 		const float pipe_width = 150;
-		const float ground_height = ofGetWindowHeight() - 185;
 		const float top_pipe_height = 1000.0f;
+		const float ground_height = ofGetWindowHeight() - 185;
+		const float ground_barrier = ground_height - 140;
 		const float point_delay = 150.0f;
 		float pipe1_position;
 		float pipe2_position;
@@ -61,4 +63,9 @@ class ofApp : public ofBaseApp{
 		float pipe1_height;
 		float pipe2_height;
 		float pipe3_height;
+		
+		float hitbox_x = wings_down_x_pos + 50;
+		float hitbox_y = bird_y_position + 50;
+		const float hitbox_width = wings_down_width - 75;
+		const float hitbox_height = wings_down_height - 120;
 };

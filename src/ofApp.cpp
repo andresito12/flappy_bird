@@ -24,6 +24,7 @@ void ofApp::setup(){
 	bird_velocity = 0.0f;
 	bird_acceleration = 0.0f;
 	bird_flapped = false;
+	bird_is_dead = false;
 
 	//pipe variables
 	pipe1_position = 1500;
@@ -36,39 +37,77 @@ void ofApp::setup(){
 
 //--------------------------------------------------------------
 void ofApp::update(){
-	//bird physics
-	if (bird_flapped) {
+	//bird flap and fall
+	if (bird_flapped && bird_is_dead == false) {
 		bird_acceleration = 0.0f;
 		bird_velocity = bird_flap_thrust;
 		bird_flapped = false;
 	} else {
 		bird_acceleration += bird_gravity;
 	}
+
+	//cap acceleration at gravity
 	if (bird_acceleration >= bird_gravity) {
 		bird_acceleration = bird_gravity;
 	}
-	bird_velocity += bird_acceleration;
-	bird_y_position += bird_velocity;
+	
+	//update bird and hitbox vertical position if above ground barrier
+	if (bird_y_position < ground_barrier) {
+		bird_velocity += bird_acceleration;
+		bird_y_position += bird_velocity;
+		hitbox_y += bird_velocity;
+	} else {
+		bird_is_dead = true;
+	}
 	
 	//level scrolling for pipes
-	pipe1_position -= 1.0f;
-	pipe2_position -= 1.0f;
-	pipe3_position -= 1.0f;
-	if (pipe1_position < 0) {
+	if (bird_is_dead == false) {
+		pipe1_position -= 1.0f;
+		pipe2_position -= 1.0f;
+		pipe3_position -= 1.0f;
+	}
+	if (pipe1_position < 0 && bird_is_dead == false) {
 		pipe1_height = ofRandom(200, 800);
 		pipe1_position = 1210;
-	} else if (pipe2_position < 0) {
+	} else if (pipe2_position < 0 && bird_is_dead == false) {
 		pipe2_height = ofRandom(200, 800);
 		pipe2_position = 1210;
-	} else if (pipe3_position < 0) {
+	} else if (pipe3_position < 0 && bird_is_dead == false) {
 		pipe3_height = ofRandom(200, 800);
 		pipe3_position = 1210;
 	}
 
+	if (bird_is_dead) {
+		die.play();
+		fall.play();
+	}
+
+	//hit detection for pipe1
+	if ((hitbox_x + hitbox_width) >= (pipe1_position - pipe_width) && (hitbox_x) <= (pipe1_position)) {
+		if (hitbox_y <= (ground_height - pipe1_height - vert_pipe_space) || (hitbox_y + hitbox_height) >= (ground_height - pipe1_height)) {
+			bird_is_dead = true;
+		}
+	}
+
+	//hit detection for pipe2
+	if ((hitbox_x + hitbox_width) >= (pipe2_position - pipe_width) && (hitbox_x) <= (pipe2_position)) {
+		if (hitbox_y <= (ground_height - pipe2_height - vert_pipe_space) || (hitbox_y + hitbox_height) >= (ground_height - pipe2_height)) {
+			bird_is_dead = true;
+		}
+	}
+
+	//hit detection for pipe3
+	if ((hitbox_x + hitbox_width) >= (pipe3_position - pipe_width) && (hitbox_x) <= (pipe3_position)) {
+		if (hitbox_y <= (ground_height - pipe3_height - vert_pipe_space) || (hitbox_y + hitbox_height) >= (ground_height - pipe3_height)) {
+			bird_is_dead = true;
+		}
+	}
+
 	//check for successful pass thorugh pipe
-	if (bird_x_position == pipe1_position - point_delay
+	if ((bird_x_position == pipe1_position - point_delay
 		|| bird_x_position == pipe2_position - point_delay
-		|| bird_x_position == pipe3_position - point_delay) {
+		|| bird_x_position == pipe3_position - point_delay)
+		&& bird_is_dead == false) {
 		pipe_pass.play();
 		score++;
 	}
@@ -80,18 +119,19 @@ void ofApp::draw(){
 	ofSetColor(255);
 	background.draw(0, 0, ofGetWindowWidth(), ofGetWindowHeight());
 
+	//set and draw hit box
+	ofFill();
+	ofSetColor(0, 0, 0, 0);
+	ofDrawRectangle(hitbox_x, hitbox_y, hitbox_width, hitbox_height);
+	
 	//draws wings up bird if falling
 	//else draw wings down bird if flapping
+	ofSetColor(255);
 	if (bird_velocity > 0) {
 		wings_up.draw(wings_up_x_pos, bird_y_position, wings_up_width, wings_up_height);
 	} else {
 		wings_down.draw(wings_down_x_pos, bird_y_position, wings_down_width, wings_down_height);
 	}
-
-	//rectangle that fills ground
-	ofFill();
-	ofSetColor(50, 150, 50, 0);
-	ofDrawRectangle(0, 1315, 1000, 0);
 
 	//sets color and fill for all three pipes
 	ofFill();
@@ -122,11 +162,13 @@ void ofApp::draw(){
 
 //--------------------------------------------------------------
 void ofApp::keyPressed(int key){
-	switch (key) {
+	if (bird_is_dead == false) {
+		switch (key) {
 		case ' ':
 			bird_flapped = true;
 			flap_sound.play();
-		break;
+			break;
+		}
 	}
 }
 
